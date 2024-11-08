@@ -1,0 +1,6 @@
+---
+- name: Install all
+  hosts: all
+  become: true
+  roles:
+    - servers
