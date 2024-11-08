@@ -4,11 +4,6 @@
   command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B48AD6246925553
   when: ansible_distribution == 'Ubuntu'
 
-- name: Update APT Cache
-  apt:
-    update_cache: yes
-  when: ansible_distribution == 'Ubuntu'
-
 - name: Install Java
   apt:
     name: openjdk-11-jdk
@@ -73,3 +68,63 @@
     state: latest
     update_cache: yes
   when: ansible_distribution == 'Ubuntu'
+
+- name: Install Apache
+  package:
+    name: "{{ 'apache2' if ansible_os_family == 'Debian' else 'httpd' }}"
+    state: present
+
+
+- name: Install MariaDB
+   package:
+     name: "{{ 'mysql-server' if ansible_os_family == 'Debian' else 'mariadb-server' }}"
+     state: present
+
+- name: Install PHP
+
+  package:
+
+    name: "{{ 'php libapache2-mod-php' if ansible_os_family == 'Debian' else 'php' }}"
+
+    state: present
+
+
+- name: Install PHP Extensions
+
+  package:
+
+    name: "{{ item }}"
+
+    state: present
+
+  loop:
+
+    - "{{ 'php-mysql' if ansible_os_family == 'Debian' else 'php-mysqlnd' }}"
+
+    - "{{ 'php-xml' if ansible_os_family == 'Debian' else 'php-xml' }}"
+
+    - "{{ 'php-mbstring' if ansible_os_family == 'Debian' else 'php-mbstring' }}"
+
+    - "{{ 'php-curl' if ansible_os_family == 'Debian' else 'php-curl' }}"
+
+
+- name: Start and enable Apache
+
+  service:
+
+    name: "{{ 'apache2' if ansible_os_family == 'Debian' else 'httpd' }}"
+
+    state: started
+
+    enabled: yes
+
+
+- name: Start and enable MySQL/MariaDB
+
+  service:
+
+    name: "{{ 'mysql' if ansible_os_family == 'Debian' else 'mariadb' }}"
+
+    state: started
+
+    enabled: yes
