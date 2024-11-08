@@ -1,5 +1,0 @@
-- host: all 
-  become: true
-  tasks:
-    roles:
-      - servers
