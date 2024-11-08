@@ -26,7 +26,7 @@
   when: ansible_distribution == 'CentOS'
 
 - name: Install Elasticsearch
-  package:
+  apt:
     name: elasticsearch
     state: present
   vars:
