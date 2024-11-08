@@ -9,12 +9,6 @@
     update_cache: yes
   when: ansible_distribution == 'Ubuntu'
 
-- name: Install Java
-  apt:
-    name: openjdk-11-jdk
-    state: present
-  when: ansible_distribution == 'Ubuntu'
-
 - name: Add Elasticsearch GPG Key
   apt_key:
     url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
