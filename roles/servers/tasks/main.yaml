@@ -4,6 +4,17 @@
   command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B48AD6246925553
   when: ansible_distribution == 'Ubuntu'
 
+- name: Update APT Cache
+  apt:
+    update_cache: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Install Java
+  apt:
+    name: openjdk-11-jdk
+    state: present
+  when: ansible_distribution == 'Ubuntu'
+
 - name: Add Elasticsearch GPG Key
   apt_key:
     url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
@@ -26,7 +37,7 @@
   when: ansible_distribution == 'CentOS'
 
 - name: Install Elasticsearch
-  apt:
+  package:
     name: elasticsearch
     state: present
   vars:
