@@ -25,6 +25,13 @@
     gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
   when: ansible_distribution == 'CentOS'
 
+- name: Install Elasticsearch
+  apt:
+    name: elasticsearch
+    state: present
+  vars:
+    ansible_python_interpreter:/user/bin/python3
+
 - name: Install Kibana
   apt:
     name: kibana
